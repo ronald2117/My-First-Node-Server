@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<%- include('./partials/head.ejs') %>
+<body>
+	<header id="header">
+		<%- include('./partials/nav.ejs') %>
+	</header>
+<main>
+	<section id="welcome-section">
+		<h2>Ronald's Blogs</h2>
+
+		<% if (blogs.length > 0) { %>
+			<% blogs.forEach(blog => { %>
+				<a class="single" href="/blogs/<%= blog._id %>">
+				<h3 class="title"><%= blog.title %></h3>
+				<h4 class="snippet"><%= blog.snippet %></h4>
+				</a>
+			<% }) %>
+		<% } else {%>
+			<p>There is no blog to display</p>
+			<% } %> 
+
+        <a href="http://127.0.0.1:3000/blogs/create">Create blog</a>
+	</section>
+</main>
+</body>
+</html>

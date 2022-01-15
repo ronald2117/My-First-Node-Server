@@ -1,7 +1,7 @@
 const express = require('express'); //Node frameworks for making server easily
 const morgan = require('morgan'); //Third Party Middleware
 const mongoose = require('mongoose'); //import Object Document Model library
-const Blog = require('./models/blog'); //import schemas/model
+const blogRoutes = require('./routes/blogRoutes');
 
 //express app
 const app = express();
@@ -23,60 +23,22 @@ console.log('Server running at http://127.0.0.1:3000/');
 app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.locals.path = req.path;
+  next();
+});
 
 //routes
 app.get('/', (req, res) => {
-	res.render('main', { title: 'Home'});
+	res.redirect('/blogs');
 });
 app.get('/about', (req, res) => {
 	res.render('about', { title: 'About'});
 });
-app.get('/contacts', (req, res) => {
-	res.render('contacts', { title: 'Contacts'});
-});
-app.get('/blogs', (req, res) => {
-	Blog.find().sort({ createdAt: -1 })
-		.then((result) => {
-			res.render('blogs', { title: 'All Blogs', blogs: result})
-		})
-})
+app.get('')
+//blog routes
+app.use('/blogs', blogRoutes);
 
-app.get('/blogs/create', (req, res) => {
-	res.render('create', { title: 'Create Blog'});
-})
-
-app.post('/blogs', (req, res) => {
-	const blog = new Blog(req.body);
-	blog.save()
-		.then((result) => {
-			res.redirect('/blogs');
-		})
-		.catch((err) => {
-			console.log(err);
-		})
-})
-app.get('/blogs/:id', (req, res) => {
-	const id = req.params.id;
-	Blog.findById(id)
-		.then((result) => {
-			res.render('details', {blog: result, title: 'Blog Details' })
-		})
-		.catch(err => {
-			console.log(err);
-		})
-})
-//delete
-app.delete('/blogs/:id', (req, res) => {
-	const id = req.params.id;
-
-	Blog.findByIdAndDelete(id)
-		.then(result => {
-			res.json({ redirect: '/blogs'});
-		})
-		.catch(err => {
-			console.log(err);
-		});
-})
 //default
 app.use((req, res) => {
 	res.status(404).render('404', { title: '404'});

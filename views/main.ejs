@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html>
-<%- include('./partials/head.ejs') %>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
 <body>
-	<header id="header">
-		<%- include('./partials/nav.ejs') %>
-	</header>
-<main>
-	<section id="welcome-section">
-		<h2>Hi I am Ronald</h2>
-		<h3>A Web Developer</h3>
-		<p>Homepage</p>
-	</section>
-</main>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="blogs content">
+    <h2>All Blogs</h2>
+
+    <% if (blogs.length > 0) { %>
+      <% blogs.forEach(blog => { %>
+        <a class="single" href="/blogs/<%= blog._id %>">
+          <h3 class="title"><%= blog.title %></h3>
+          <p class="snippet"><%= blog.snippet %></p>
+        </a>
+      <% }) %>
+    <% } else { %>
+      <p>There are no blogs to display...</p>
+    <% } %>
+    
+  </div>
+
+  <%- include("./partials/footer.ejs") %>
 </body>
 </html>

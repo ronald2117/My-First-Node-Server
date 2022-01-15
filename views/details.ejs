@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html>
-<%- include('./partials/head.ejs') %>
-<body>
-	<header id="header">
-		<%- include('./partials/nav.ejs') %>
-	</header>
-<main>
-	<div class="blog-details">
-        <h2><%= blog.title %></h2>
-        <div class="content">
-            <p><%= blog.body %></p>
-        </div>
-        <a class="delete" data-doc="<%= blog._id %>">Delete</a>
-    </div>
-    <script type="text/javascript">
-        const trashcan = document.querySelector('a.delete');
-        trashcan.addEventListener('click', (e) => {
-            const endpoint = `/blogs/${trashcan.dataset.doc}`;
+<html lang="en">
+<%- include("./partials/head.ejs") %>
 
-            fetch(endpoint, { method: 'DELETE'})
-                .then(response => response.json())
-                .then(data => window.location.href = data.redirect)
-                .catch(err => console.log(err))
-        });
-    </script>
-</main>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="details content">
+    <h2><%= blog.title %></h2>
+    <div class="content">
+      <p><%= blog.body %></p>
+    </div>
+    <a class="delete" data-doc="<%= blog._id %>">
+        <img src="https://st2.depositphotos.com/5266903/8063/v/950/depositphotos_80631794-stock-illustration-trash-can-flat-red-color.jpg" style="width: 40px; height: 40px;" alt="delete">
+    </a>
+  </div>
+
+  <%- include("./partials/footer.ejs") %>
+
+  <script>
+    const trashcan = document.querySelector('a.delete');
+    trashcan.addEventListener('click', (e) => {
+      const endpoint = `/blogs/${trashcan.dataset.doc}`;
+      fetch(endpoint, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => window.location.href = data.redirect)
+      .catch(err => console.log(err));
+    });
+    
+  </script>
 </body>
 </html>

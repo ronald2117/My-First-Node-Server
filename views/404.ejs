@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-<%- include('./partials/head.ejs') %>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
 <body>
-	<header id="header">
-		<%- include('./partials/nav.ejs') %>
-	</header>
-<main>
-	<section id="welcome-section">
-		<h2>404 ERROR</h2>
-        <h3>This page doesn't exist :/</h3>
-	</section>
-	<h1></h1>
-	h1
-</main>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="not-found content">
+    OOPS, page not found :)
+  </div>
+
+  <%- include("./partials/footer.ejs") %>
 </body>
 </html>

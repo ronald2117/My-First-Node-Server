@@ -3,6 +3,8 @@ const morgan = require('morgan'); //Third Party Middleware
 const mongoose = require('mongoose'); //import Object Document Model library
 const blogRoutes = require('./routes/blogRoutes');
 
+//port
+const port = process.env.PORT || 3000;
 //express app
 const app = express();
 
@@ -10,7 +12,7 @@ const app = express();
 const dbURI = 'mongodb+srv://ronald2117:roscelia00905311248@cluster0.tlhyl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
 	.then((result) => {
-		app.listen(3000);
+		app.listen(port);
 		console.log('Connected to Database');
 	})
 	.catch((err) => console.log(err));
